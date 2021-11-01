@@ -178,7 +178,7 @@ def build_format_file(
                 str(0),  # Host file data length
                 f'"{_escape(_delim)}"',  # Terminator (see note below)
                 str(
-                    col_num if not db_cols_order else db_cols_order[str(col_name)]
+                    col_num if not db_cols_order else db_cols_order[str(col_name).upper()]
                 ),  # Server column order
                 str(col_name),  # Server column name, optional as long as not blank
                 sql_collation,  # Column collation

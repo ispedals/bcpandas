@@ -209,7 +209,7 @@ def _handle_cols_for_append(
             pd.read_sql_query(
                 dedent(
                     """
-                SELECT COLUMN_NAME, ORDINAL_POSITION 
+                SELECT upper(COLUMN_NAME) COLUMN_NAME, ORDINAL_POSITION 
                 FROM INFORMATION_SCHEMA.COLUMNS 
                 WHERE TABLE_SCHEMA = '{_schema}'
                 AND TABLE_NAME = '{_tbl}'
@@ -224,7 +224,7 @@ def _handle_cols_for_append(
         # check that column names match in db and dataframe exactly
         if sql_item_exists:
             # the db cols are always strings, unlike df cols
-            extra_cols = [str(x) for x in df.columns if str(x) not in cols_dict.keys()]
+            extra_cols = [str(x) for x in df.columns if str(x).upper() not in cols_dict.keys()]
             if extra_cols:
                 raise BCPandasValueError(
                     f"Column(s) detected in the dataframe that are not in the database, "
